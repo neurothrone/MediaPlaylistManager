@@ -3,6 +3,12 @@
     <PropertyGroup>
         <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- FIX:
+		     This fixes the error: "This version of the MVVM Toolkit requires 'Microsoft.Windows.SDK.NET.Ref' version '10.0.19041.38' or later."
+			 Source:
+			 https://stackoverflow.com/questions/78990331/how-can-i-fix-this-communitytoolkit-mvvm-error-message-when-i-install-it-in-my-m/78990501#78990501
+		-->
+		<WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
         <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
         <!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
 
@@ -24,7 +30,12 @@
         <ApplicationTitle>MediaPlaylistManager.PL.Maui.Client</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.mediaplaylistmanager.pl.maui.client</ApplicationId>
+		<!-- FIX:
+		     Unable to deploy on Windows until ApplicantId was shortened.
+			 Source:
+			 https://github.com/dotnet/maui/issues/18814#issuecomment-1815948538
+		-->
+        <ApplicationId>com.companyname.mediaplaylistmanager</ApplicationId>
 
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -40,29 +51,29 @@
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4"/>
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128"/>
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
         <!-- Images -->
-        <MauiImage Include="Resources\Images\*"/>
-        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185"/>
+        <MauiImage Include="Resources\Images\*" />
+        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
         <!-- Custom Fonts -->
-        <MauiFont Include="Resources\Fonts\*"/>
+        <MauiFont Include="Resources\Fonts\*" />
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)"/>
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Maui" Version="9.0.3" />
         <PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="4.1.1" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
