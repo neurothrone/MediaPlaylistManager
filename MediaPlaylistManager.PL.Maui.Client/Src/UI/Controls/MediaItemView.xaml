@@ -79,6 +79,18 @@
                      WidthRequest="10"
                      VerticalOptions="Fill"
                      HorizontalOptions="End" />
+
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="Edit"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MediaItemListViewModel}}, Path=NavigateToEditMediaItemPageCommand}"
+                                    CommandParameter="{Binding Id}" />
+                    
+                    <MenuFlyoutItem Text="Delete"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MediaItemListViewModel}}, Path=DeleteMediaItemCommand}"
+                                    CommandParameter="{Binding .}" />
+                </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
         </Grid>
     </SwipeView>
 </ContentView>

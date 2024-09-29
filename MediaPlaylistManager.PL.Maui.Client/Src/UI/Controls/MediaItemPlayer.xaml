@@ -19,10 +19,12 @@
               ColumnSpacing="10">
 
             <ImageButton Grid.Column="0"
+                         VerticalOptions="Center"
                          Source="{StaticResource VolumeOffIcon}"
                          Command="{Binding SetVolumeToMinCommand}" />
 
             <Slider Grid.Column="1"
+                    VerticalOptions="Center"
                     MinimumTrackColor="DarkViolet"
                     MaximumTrackColor="MediumPurple"
                     ThumbColor="BlueViolet"

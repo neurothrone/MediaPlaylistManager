@@ -8,7 +8,7 @@
              Title="Playlists">
 
     <Grid ColumnDefinitions="*,100"
-          RowDefinitions="40,1,*"
+          RowDefinitions="50,1,*"
           ColumnSpacing="20"
           RowSpacing="20"
           Margin="0,20">
@@ -80,6 +80,7 @@
 
                             <Label Grid.Column="0"
                                    HorizontalOptions="Start"
+                                   VerticalOptions="Center"
                                    MaxLines="1"
                                    LineBreakMode="TailTruncation"
                                    FontSize="20"
@@ -88,7 +89,9 @@
 
                             <Image
                                 Grid.Column="1"
+                                HeightRequest="24"
                                 HorizontalOptions="End"
+                                VerticalOptions="Center"
                                 Source="{StaticResource ChevronRightIcon}" />
 
                             <Grid.GestureRecognizers>
@@ -97,6 +100,18 @@
                                     CommandParameter="{Binding Id}"
                                     NumberOfTapsRequired="1" />
                             </Grid.GestureRecognizers>
+
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Edit"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PlaylistListViewModel}}, Path=NavigateToEditPlaylistPageCommand}"
+                                                    CommandParameter="{Binding Id}" />
+
+                                    <MenuFlyoutItem Text="Delete"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PlaylistListViewModel}}, Path=DeletePlaylistCommand}"
+                                                    CommandParameter="{Binding .}" />
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
                         </Grid>
                     </SwipeView>
                 </DataTemplate>
