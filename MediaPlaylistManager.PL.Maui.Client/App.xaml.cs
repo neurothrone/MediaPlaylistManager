@@ -20,8 +20,14 @@ public partial class App : Application
         var window = base.CreateWindow(activationState);
 
 #if WINDOWS || MACCATALYST
-        window.MinimumHeight = 800d;
-        window.MinimumWidth = 700d;
+        const double windowHeight = 800d;
+        const double windowWidth = 700d;
+
+        window.MinimumHeight = windowHeight;
+        window.MinimumWidth = windowWidth;
+        
+        window.Height = windowHeight;
+        window.Width = windowWidth;
 #endif
 
         return window;
