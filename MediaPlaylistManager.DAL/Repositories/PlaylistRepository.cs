@@ -51,6 +51,7 @@ public class PlaylistRepository : IPlaylistRepository
         if (playlistToDelete == null)
             return Task.FromResult(false);
 
+        _dataStore.MediaItems.RemoveAll(m => m.PlaylistId == playlistToDelete.Id);
         _dataStore.Playlists.Remove(playlistToDelete);
         return Task.FromResult(true);
     }

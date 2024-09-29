@@ -1,12 +1,16 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using MediaPlaylistManager.DTO.Models;
+using MediaPlaylistManager.PL.Maui.Client.Messages;
 using MediaPlaylistManager.PL.Maui.Client.Utils;
 using MediaPlaylistManager.SL.Interfaces;
 
 namespace MediaPlaylistManager.PL.Maui.Client.ViewModels;
 
-public partial class SearchViewModel : MediaItemListViewModel
+public partial class SearchViewModel :
+    MediaItemListViewModel,
+    IRecipient<MediaItemsRefreshMessage>
 {
     [ObservableProperty]
     private string _searchText = string.Empty;
@@ -18,6 +22,7 @@ public partial class SearchViewModel : MediaItemListViewModel
         IMediaItemService mediaItemService,
         INavigator navigator) : base(mediaItemService, navigator)
     {
+        WeakReferenceMessenger.Default.Register<MediaItemsRefreshMessage>(this);
     }
 
     [RelayCommand]
@@ -47,4 +52,13 @@ public partial class SearchViewModel : MediaItemListViewModel
             }
         });
     }
+
+    #region IRecipient<MediaItemsRefreshMessage>
+
+    public async void Receive(MediaItemsRefreshMessage message)
+    {
+        await Search();
+    }
+
+    #endregion
 }

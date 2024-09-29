@@ -55,6 +55,7 @@ public partial class PlaylistListViewModel :
             return;
 
         MainThread.BeginInvokeOnMainThread(() => Playlists.Remove(playlist));
+        WeakReferenceMessenger.Default.Send(new MediaItemsRefreshMessage());
     }
 
     [RelayCommand]
