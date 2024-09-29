@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MediaPlaylistManager.PL.Maui.Client.ViewModels"
+             x:Class="MediaPlaylistManager.PL.Maui.Client.UI.Controls.MediaItemView"
+             x:DataType="viewModels:MediaItemViewModel">
+
+    <SwipeView BackgroundColor="Black">
+        <SwipeView.RightItems>
+            <SwipeItems>
+                <SwipeItem BackgroundColor="DarkRed"
+                           IsDestructive="True"
+                           Text="Delete"
+                           Command="{Binding 
+                             Source={RelativeSource 
+                             AncestorType={x:Type viewModels:MediaItemListViewModel}}, 
+                             Path=DeleteMediaItemCommand}"
+                           CommandParameter="{Binding .}" />
+
+                <SwipeItem BackgroundColor="DarkGoldenrod"
+                           Text="Edit"
+                           Command="{Binding 
+                             Source={RelativeSource 
+                             AncestorType={x:Type viewModels:MediaItemListViewModel}}, 
+                             Path=NavigateToEditMediaItemPageCommand}"
+                           CommandParameter="{Binding Id}" />
+            </SwipeItems>
+        </SwipeView.RightItems>
+
+        <Grid>
+            <Grid ColumnDefinitions="70,*,*"
+                  RowDefinitions="*,*"
+                  Padding="20">
+
+                <Label Grid.Column="0"
+                       Grid.Row="0"
+                       FontSize="20"
+                       TextColor="DarkGray"
+                       Text="Title:" />
+                <Label Grid.Column="1"
+                       Grid.Row="0"
+                       HorizontalOptions="Start"
+                       MaxLines="1"
+                       LineBreakMode="TailTruncation"
+                       FontSize="20"
+                       TextColor="White"
+                       Text="{Binding Title}" />
+
+                <Label Grid.Column="0"
+                       Grid.Row="1"
+                       FontSize="20"
+                       TextColor="DarkGray"
+                       Text="Artist:" />
+                <Label Grid.Column="1"
+                       Grid.Row="1"
+                       HorizontalOptions="Start"
+                       MaxLines="1"
+                       LineBreakMode="TailTruncation"
+                       FontSize="20"
+                       TextColor="White"
+                       Text="{Binding Artist}" />
+
+                <ImageButton
+                    Grid.Column="2"
+                    Grid.RowSpan="2"
+                    Margin="0,0,20,0"
+                    HorizontalOptions="End"
+                    HeightRequest="44"
+                    Source="{StaticResource LoadAudioIcon}"
+                    Command="{Binding 
+                      Source={RelativeSource 
+                      AncestorType={x:Type viewModels:MediaItemListViewModel}}, 
+                      Path=OpenMediaItemInPlayerCommand}"
+                    CommandParameter="{Binding .}" />
+            </Grid>
+
+            <BoxView BackgroundColor="MediumPurple"
+                     WidthRequest="10"
+                     VerticalOptions="Fill"
+                     HorizontalOptions="End" />
+        </Grid>
+    </SwipeView>
+</ContentView>

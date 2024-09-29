@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MediaPlaylistManager.PL.Maui.Client.UI.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModels="clr-namespace:MediaPlaylistManager.PL.Maui.Client.ViewModels"
+             x:Class="MediaPlaylistManager.PL.Maui.Client.UI.Pages.PlaylistDetailPage"
+             x:DataType="viewModels:PlaylistDetailViewModel"
+             Title="{Binding Playlist.Title, FallbackValue='Playlist'}">
+
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="Add"
+            Order="Primary"
+            IconImageSource="{StaticResource AddIcon}"
+            Command="{Binding NavigateToAddMediaItemPageCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid Margin="0,20">
+        <ActivityIndicator
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            IsVisible="{Binding IsLoading}"
+            IsRunning="{Binding IsLoading}" />
+
+        <CollectionView
+            BackgroundColor="Transparent"
+            IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+            ItemsSource="{Binding MediaItems}">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <Label Text="No media items yet."
+                           FontSize="20"
+                           HorizontalTextAlignment="Center" />
+                </ContentView>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:MediaItemViewModel">
+                    <controls:MediaItemView />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

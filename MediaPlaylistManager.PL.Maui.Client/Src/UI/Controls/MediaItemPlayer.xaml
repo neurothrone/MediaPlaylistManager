@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModels="clr-namespace:MediaPlaylistManager.PL.Maui.Client.ViewModels"
+             x:Class="MediaPlaylistManager.PL.Maui.Client.UI.Controls.MediaItemPlayer"
+             x:DataType="viewModels:MediaItemPlayerViewModel">
+
+    <VerticalStackLayout Spacing="20">
+
+        <!-- Source: https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/views/mediaelement -->
+        <toolkit:MediaElement x:Name="Player"
+                              ShouldShowPlaybackControls="False"
+                              Volume="{Binding Volume}"
+                              Source="{Binding Source}" />
+
+        <Grid ColumnDefinitions="44,*,44"
+              ColumnSpacing="10">
+
+            <ImageButton Grid.Column="0"
+                         Source="{StaticResource VolumeOffIcon}"
+                         Command="{Binding SetVolumeToMinCommand}" />
+
+            <Slider Grid.Column="1"
+                    MinimumTrackColor="DarkViolet"
+                    MaximumTrackColor="MediumPurple"
+                    ThumbColor="BlueViolet"
+                    Minimum="0"
+                    Maximum="1"
+                    Value="{Binding Volume}" />
+
+            <ImageButton Grid.Column="2"
+                         Source="{StaticResource VolumeMaxIcon}"
+                         Command="{Binding SetVolumeToMaxCommand}" />
+        </Grid>
+
+        <Grid ColumnDefinitions="*,*,*"
+              ColumnSpacing="20">
+            <Button Grid.Column="0"
+                    BackgroundColor="BlueViolet"
+                    Text="Play"
+                    Command="{Binding PlayCommand}" />
+            <Button Grid.Column="1"
+                    BackgroundColor="BlueViolet"
+                    Text="Pause"
+                    Command="{Binding PauseCommand}" />
+            <Button Grid.Column="2"
+                    BackgroundColor="BlueViolet"
+                    Text="Stop"
+                    Command="{Binding StopCommand}" />
+        </Grid>
+
+        <Label
+            HorizontalOptions="Center"
+            FontSize="18">
+
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span
+                        Text="{Binding Source={x:Reference Player}, Path=Position, StringFormat='{0:hh\\:mm\\:ss}'}" />
+                    <Span Text=" / " />
+                    <Span
+                        Text="{Binding Source={x:Reference Player}, Path=Duration, StringFormat='{0:hh\\:mm\\:ss}'}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </VerticalStackLayout>
+</ContentView>

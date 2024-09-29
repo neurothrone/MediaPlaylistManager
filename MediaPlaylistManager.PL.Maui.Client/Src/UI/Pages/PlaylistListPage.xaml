@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MediaPlaylistManager.PL.Maui.Client.ViewModels"
+             x:Class="MediaPlaylistManager.PL.Maui.Client.UI.Pages.PlaylistListPage"
+             x:DataType="viewModels:PlaylistListViewModel"
+             Title="Playlists">
+
+    <Grid ColumnDefinitions="*,100"
+          RowDefinitions="40,1,*"
+          ColumnSpacing="20"
+          RowSpacing="20"
+          Margin="0,20">
+
+        <Entry Grid.Column="0"
+               Grid.Row="0"
+               Margin="20,0,0,0"
+               IsSpellCheckEnabled="False"
+               IsTextPredictionEnabled="False"
+               Placeholder="Playlist Title"
+               FontSize="16"
+               ReturnType="Done"
+               ReturnCommand="{Binding AddPlaylistCommand}"
+               Text="{Binding Title}" />
+
+        <Button Grid.Column="1"
+                Grid.Row="0"
+                Margin="0,0,20,0"
+                BackgroundColor="BlueViolet"
+                FontSize="16"
+                Text="Create"
+                Command="{Binding AddPlaylistCommand}" />
+
+        <BoxView Grid.ColumnSpan="2"
+                 Grid.Row="1"
+                 HeightRequest="1"
+                 Color="BlueViolet" />
+
+        <CollectionView Grid.ColumnSpan="2"
+                        Grid.Row="2"
+                        BackgroundColor="Transparent"
+                        ItemsSource="{Binding Playlists}">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="Start"
+                        FontSize="20"
+                        Text="No playlists yet." />
+                </ContentView>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:PlaylistViewModel">
+                    <SwipeView BackgroundColor="Black">
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem BackgroundColor="DarkRed"
+                                           IsDestructive="True"
+                                           Text="Delete"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PlaylistListViewModel}}, Path=DeletePlaylistCommand}"
+                                           CommandParameter="{Binding .}" />
+
+                                <SwipeItem BackgroundColor="DarkGoldenrod"
+                                           Text="Edit"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PlaylistListViewModel}}, Path=NavigateToEditPlaylistPageCommand}"
+                                           CommandParameter="{Binding Id}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Grid ColumnDefinitions="*,40"
+                              Padding="20">
+
+                            <Label Grid.Column="0"
+                                   HorizontalOptions="Start"
+                                   MaxLines="1"
+                                   LineBreakMode="TailTruncation"
+                                   FontSize="20"
+                                   TextColor="White"
+                                   Text="{Binding Title}" />
+
+                            <Image
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                Source="{StaticResource ChevronRightIcon}" />
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PlaylistListViewModel}}, Path=NavigateToDetailPageCommand}"
+                                    CommandParameter="{Binding Id}"
+                                    NumberOfTapsRequired="1" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

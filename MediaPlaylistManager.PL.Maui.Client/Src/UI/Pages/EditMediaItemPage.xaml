@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModels="clr-namespace:MediaPlaylistManager.PL.Maui.Client.ViewModels"
+             x:Class="MediaPlaylistManager.PL.Maui.Client.UI.Pages.EditMediaItemPage"
+             x:DataType="viewModels:EditMediaItemViewModel"
+             Title="Edit Media Item">
+
+    <ContentPage.Resources>
+        <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Padding="20"
+                         Spacing="20"
+                         x:DataType="viewModels:MediaItemViewModel"
+                         IsVisible="{Binding ., Converter={StaticResource IsNotNullConverter}}">
+
+        <Grid ColumnDefinitions="50,*"
+              ColumnSpacing="20">
+            <Label Grid.Column="0"
+                   VerticalOptions="Center"
+                   FontSize="16"
+                   Text="Title:" />
+            <Entry Grid.Column="1"
+                   VerticalOptions="Center"
+                   FontSize="16"
+                   IsSpellCheckEnabled="False"
+                   IsTextPredictionEnabled="False"
+                   Text="{Binding Title}" />
+        </Grid>
+
+        <Grid ColumnDefinitions="50,*"
+              ColumnSpacing="20">
+            <Label Grid.Column="0"
+                   VerticalOptions="Center"
+                   FontSize="16"
+                   Text="Artist:" />
+            <Entry Grid.Column="1"
+                   VerticalOptions="Center"
+                   FontSize="16"
+                   IsSpellCheckEnabled="False"
+                   IsTextPredictionEnabled="False"
+                   Text="{Binding Artist}" />
+        </Grid>
+
+        <Label
+            FontSize="16"
+            Text="{Binding Duration, StringFormat='Duration: {0:hh\\:mm\\:ss}', FallbackValue='Unknown Duration'}" />
+
+        <Button BackgroundColor="BlueViolet"
+                Text="Save"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:EditMediaItemViewModel}}, Path=SaveChangesCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MediaPlaylistManager.PL.Maui.Client.UI.Controls"
+             xmlns:viewModels="clr-namespace:MediaPlaylistManager.PL.Maui.Client.ViewModels"
+             x:Class="MediaPlaylistManager.PL.Maui.Client.UI.Pages.SearchPage"
+             x:DataType="viewModels:SearchViewModel"
+             Title="Search">
+
+    <Grid ColumnDefinitions="*,100"
+          RowDefinitions="40,1,*"
+          ColumnSpacing="20"
+          RowSpacing="20"
+          Margin="0,20">
+
+        <!-- !: Search Bar -->
+        <Entry Grid.Column="0"
+               Grid.Row="0"
+               Margin="20,0,0,0"
+               FontSize="16"
+               IsSpellCheckEnabled="False"
+               IsTextPredictionEnabled="False"
+               Placeholder="Search media items..."
+               ReturnType="Done"
+               ReturnCommand="{Binding SearchCommand}"
+               Text="{Binding SearchText}" />
+
+        <Button Grid.Column="1"
+                Grid.Row="0"
+                Margin="0,0,20,0"
+                BackgroundColor="BlueViolet"
+                FontSize="16"
+                Text="Search"
+                Command="{Binding SearchCommand}" />
+
+        <!-- Divider -->
+        <BoxView Grid.ColumnSpan="2"
+                 Grid.Row="1"
+                 HeightRequest="1"
+                 Color="BlueViolet" />
+
+        <!-- Search Results -->
+        <CollectionView Grid.ColumnSpan="2"
+                        Grid.Row="2"
+                        BackgroundColor="Transparent"
+                        ItemsSource="{Binding MediaItems}">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <Label HorizontalTextAlignment="Center"
+                           VerticalOptions="Start"
+                           FontSize="20"
+                           Text="{Binding SearchResultsFeedback}" />
+                </ContentView>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:MediaItemViewModel">
+                    <controls:MediaItemView />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
