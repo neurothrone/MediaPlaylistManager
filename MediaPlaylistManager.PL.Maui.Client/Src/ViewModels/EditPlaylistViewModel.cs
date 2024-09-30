@@ -57,7 +57,6 @@ public partial class EditPlaylistViewModel : ObservableObject, IQueryAttributabl
         if (playlistDto is null)
             return;
 
-        // TODO: figure out why Playlist is not notifying UI
         MainThread.BeginInvokeOnMainThread(() =>
         {
             Playlist = playlistDto.ToPlaylistViewModel();
