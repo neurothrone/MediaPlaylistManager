@@ -9,6 +9,11 @@ public class Navigator : INavigator
         await Shell.Current.GoToAsync(route);
     }
 
+    public async Task GoToAsync(string route, IDictionary<string, object> parameters)
+    {
+        await Shell.Current.GoToAsync(route, parameters);
+    }
+
     public async Task GoBackAsync()
     {
         await Shell.Current.GoToAsync("..");
