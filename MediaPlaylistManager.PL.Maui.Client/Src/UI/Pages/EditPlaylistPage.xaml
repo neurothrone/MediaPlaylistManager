@@ -42,7 +42,8 @@
                        Text="{Binding Title}" />
             </Grid>
 
-            <Button Text="Save"
+            <Button BackgroundColor="BlueViolet"
+                    Text="Save"
                     Command="{Binding SaveChangesCommand}" />
         </VerticalStackLayout>
     </VerticalStackLayout>
