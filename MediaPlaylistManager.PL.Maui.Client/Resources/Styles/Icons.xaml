@@ -14,10 +14,16 @@
                Glyph="&#xf058;" />
 
     <FontImage x:Key="DeleteIcon"
-               Color="Red"
+               Color="Silver"
                FontFamily="FaSolid"
                Size="24"
-               Glyph="&#xf1f8;" />
+               Glyph="&#xf2ed;" />
+
+    <FontImage x:Key="EditIcon"
+               Color="Silver"
+               FontFamily="FaSolid"
+               Size="24"
+               Glyph="&#xf044;" />
 
     <FontImage x:Key="AddIcon"
                Color="BlueViolet"

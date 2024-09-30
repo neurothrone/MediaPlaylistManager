@@ -65,11 +65,13 @@
                                 <SwipeItem BackgroundColor="DarkRed"
                                            IsDestructive="True"
                                            Text="Delete"
+                                           IconImageSource="{StaticResource DeleteIcon}"
                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PlaylistListViewModel}}, Path=DeletePlaylistCommand}"
                                            CommandParameter="{Binding .}" />
 
-                                <SwipeItem BackgroundColor="DarkGoldenrod"
+                                <SwipeItem BackgroundColor="Indigo"
                                            Text="Edit"
+                                           IconImageSource="{StaticResource EditIcon}"
                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PlaylistListViewModel}}, Path=NavigateToEditPlaylistPageCommand}"
                                            CommandParameter="{Binding Id}" />
                             </SwipeItems>
