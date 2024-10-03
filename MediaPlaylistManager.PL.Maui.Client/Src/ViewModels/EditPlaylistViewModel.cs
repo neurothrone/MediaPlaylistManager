@@ -69,8 +69,9 @@ public partial class EditPlaylistViewModel : ObservableObject, IQueryAttributabl
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (!query.TryGetValue(nameof(PlaylistViewModel.Id), out var idValue)
-            || idValue is not string stringId || !int.TryParse(stringId, out var playlistId))
+        if (!query.TryGetValue(nameof(PlaylistViewModel.Id), out var idValue) ||
+            idValue is not string stringId ||
+            !int.TryParse(stringId, out var playlistId))
             return;
 
         LoadPlaylistDetailsByIdAsync(playlistId);

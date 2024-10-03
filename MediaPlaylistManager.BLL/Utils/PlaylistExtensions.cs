@@ -1,20 +1,20 @@
 using MediaPlaylistManager.BLL.Models;
-using MediaPlaylistManager.DAL.Entities;
+using MediaPlaylistManager.DAL.Shared.Entities;
 
 namespace MediaPlaylistManager.BLL.Utils;
 
 internal static class PlaylistExtensions
 {
-    public static Playlist ToPlaylist(this PlaylistEntity playlistEntity)
+    public static Playlist ToPlaylist(this PlaylistEntity playlistEntityBase)
     {
         return new Playlist
         {
-            Id = playlistEntity.Id,
-            Title = playlistEntity.Title
+            Id = playlistEntityBase.Id,
+            Title = playlistEntityBase.Title
         };
     }
 
-    public static PlaylistEntity ToPlaylistEntity(this Playlist playlist)
+    public static PlaylistEntity ToPlaylistEntity<T>(this Playlist playlist)
     {
         return new PlaylistEntity
         {

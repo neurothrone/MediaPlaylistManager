@@ -6,8 +6,8 @@ public interface IMediaItemManager
 {
     Task<int> CreateMediaItemAsync(MediaItem mediaItem);
     Task<List<MediaItem>> GetMediaItemsByPlaylistIdAsync(int playlistId);
-    Task<MediaItem?> GetMediaItemAsync(int id);
+    Task<MediaItem?> GetMediaItemIdAsync(int id);
     Task<bool> UpdateMediaItemAsync(MediaItem mediaItem);
-    Task<bool> DeleteMediaItemAsync(int id);
+    Task<bool> DeleteMediaItemByIdAsync(int id);
     Task<List<MediaItem>> SearchMediaItemsAsync(string query);
 }

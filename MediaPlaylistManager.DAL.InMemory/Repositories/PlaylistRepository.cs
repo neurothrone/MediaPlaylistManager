@@ -1,8 +1,8 @@
-using MediaPlaylistManager.DAL.Data;
-using MediaPlaylistManager.DAL.Entities;
-using MediaPlaylistManager.DAL.Interfaces;
+using MediaPlaylistManager.DAL.InMemory.Data;
+using MediaPlaylistManager.DAL.Shared.Entities;
+using MediaPlaylistManager.DAL.Shared.Interfaces;
 
-namespace MediaPlaylistManager.DAL.Repositories;
+namespace MediaPlaylistManager.DAL.InMemory.Repositories;
 
 public class PlaylistRepository : IPlaylistRepository
 {
@@ -14,7 +14,7 @@ public class PlaylistRepository : IPlaylistRepository
         _dataStore = dataStore;
     }
 
-    public Task<PlaylistEntity> AddPlaylistAsync(string title)
+    public Task<PlaylistEntity> CreatePlaylistAsync(string title)
     {
         _playlistsCount++;
 
@@ -24,12 +24,12 @@ public class PlaylistRepository : IPlaylistRepository
         return Task.FromResult(playlist);
     }
 
-    public Task<List<PlaylistEntity>> GetAllPlaylistsAsync()
+    public Task<List<PlaylistEntity>> GetPlaylistsAsync()
     {
         return Task.FromResult(_dataStore.Playlists);
     }
 
-    public Task<PlaylistEntity?> GetPlaylistAsync(int id)
+    public Task<PlaylistEntity?> GetPlaylistByIdAsync(int id)
     {
         var playlist = _dataStore.Playlists.FirstOrDefault(p => p.Id == id);
         return Task.FromResult(playlist);
@@ -45,7 +45,7 @@ public class PlaylistRepository : IPlaylistRepository
         return Task.FromResult(true);
     }
 
-    public Task<bool> DeletePlaylistAsync(int id)
+    public Task<bool> DeletePlaylistByIdAsync(int id)
     {
         var playlistToDelete = _dataStore.Playlists.FirstOrDefault(p => p.Id == id);
         if (playlistToDelete == null)

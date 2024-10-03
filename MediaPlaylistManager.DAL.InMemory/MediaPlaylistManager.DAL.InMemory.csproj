@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MediaPlaylistManager.DAL.Shared\MediaPlaylistManager.DAL.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

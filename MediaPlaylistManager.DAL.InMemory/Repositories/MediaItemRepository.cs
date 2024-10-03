@@ -1,8 +1,8 @@
-using MediaPlaylistManager.DAL.Data;
-using MediaPlaylistManager.DAL.Entities;
-using MediaPlaylistManager.DAL.Interfaces;
+using MediaPlaylistManager.DAL.InMemory.Data;
+using MediaPlaylistManager.DAL.Shared.Entities;
+using MediaPlaylistManager.DAL.Shared.Interfaces;
 
-namespace MediaPlaylistManager.DAL.Repositories;
+namespace MediaPlaylistManager.DAL.InMemory.Repositories;
 
 public class MediaItemRepository : IMediaItemRepository
 {
@@ -27,14 +27,14 @@ public class MediaItemRepository : IMediaItemRepository
     public Task<List<MediaItemEntity>> GetMediaItemsByPlaylistIdAsync(int playlistId)
     {
         var items = _dataStore.MediaItems
-            .Where(e => e.PlaylistId == playlistId)
+            .Where(m => m.PlaylistId == playlistId)
             .ToList();
         return Task.FromResult(items);
     }
 
-    public Task<MediaItemEntity?> GetMediaItemAsync(int id)
+    public Task<MediaItemEntity?> GetMediaItemByIdAsync(int id)
     {
-        var mediaItem = _dataStore.MediaItems.FirstOrDefault(e => e.Id == id);
+        var mediaItem = _dataStore.MediaItems.FirstOrDefault(m => m.Id == id);
         return Task.FromResult(mediaItem);
     }
 
@@ -51,7 +51,7 @@ public class MediaItemRepository : IMediaItemRepository
         return Task.FromResult(true);
     }
 
-    public Task<bool> DeleteMediaItemAsync(int id)
+    public Task<bool> DeleteMediaItemByIdAsync(int id)
     {
         var mediaItemToDelete = _dataStore.MediaItems.FirstOrDefault(e => e.Id == id);
         if (mediaItemToDelete == null)
@@ -64,9 +64,9 @@ public class MediaItemRepository : IMediaItemRepository
     public Task<List<MediaItemEntity>> SearchMediaItemsAsync(string query)
     {
         var results = _dataStore.MediaItems
-            .Where(e =>
-                e.Title.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                e.Artist.Contains(query, StringComparison.OrdinalIgnoreCase)
+            .Where(m =>
+                m.Title.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                m.Artist.Contains(query, StringComparison.OrdinalIgnoreCase)
             )
             .ToList();
 

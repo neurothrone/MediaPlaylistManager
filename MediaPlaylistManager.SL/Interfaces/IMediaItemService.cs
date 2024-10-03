@@ -8,6 +8,6 @@ public interface IMediaItemService
     Task<List<MediaItemDto>> GetMediaItemsByPlaylistIdAsync(int playlistId);
     Task<MediaItemDto?> GetMediaItemAsync(int id);
     Task<bool> UpdateMediaItemAsync(MediaItemDto mediaItem);
-    Task<bool> DeleteMediaItemAsync(int id);
+    Task<bool> DeleteMediaItemByIdAsync(int id);
     Task<List<MediaItemDto>> SearchMediaItemsAsync(string query);
 }
