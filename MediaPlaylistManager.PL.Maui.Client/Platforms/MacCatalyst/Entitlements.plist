@@ -10,6 +10,10 @@
         <key>com.apple.security.network.client</key>
         <true/>
         <!-- !: FilePicker setup -->
+        <!-- NOTE: MacOS sandboxing restrictions only allow this during runtime, permission does not persist 
+                   after the app is closed.
+                   Thus, the only real solution is to copy the file to the AppDataDirectory
+                   and to use that file path after reopening the app. -->
         <key>com.apple.security.files.user-selected.read-write</key>
         <true/>
     </dict>

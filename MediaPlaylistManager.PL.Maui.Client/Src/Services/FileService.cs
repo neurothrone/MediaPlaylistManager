@@ -38,6 +38,38 @@ public class FileService : IFileService
             Console.WriteLine($"Error selecting file: {ex.Message}");
         }
 
-        return result?.FullPath;
+        return result is null ? null : SaveFile(result.FullPath);
+    }
+
+    public string? SaveFile(string sourceFilePath)
+    {
+        try
+        {
+            var fileName = Path.GetFileName(sourceFilePath);
+            var mediaItemsDirectory = Path.Combine(FileSystem.AppDataDirectory, "MediaItems");
+
+            if (!Directory.Exists(mediaItemsDirectory))
+                Directory.CreateDirectory(mediaItemsDirectory);
+
+            var destinationPath = Path.Combine(mediaItemsDirectory, fileName);
+            if (!File.Exists(destinationPath))
+                File.Copy(sourceFilePath, destinationPath, true);
+
+            return destinationPath;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error copying file: {ex}");
+            return null;
+        }
+    }
+
+    public bool DeleteFile(string sourceFilePath)
+    {
+        if (!File.Exists(sourceFilePath))
+            return false;
+
+        File.Delete(sourceFilePath);
+        return true;
     }
 }

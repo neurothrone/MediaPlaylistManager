@@ -8,10 +8,14 @@ namespace MediaPlaylistManager.SL.Services;
 public class MediaItemService : IMediaItemService
 {
     private readonly IMediaItemManager _mediaItemManager;
+    private readonly IFileService _fileService;
 
-    public MediaItemService(IMediaItemManager mediaItemManager)
+    public MediaItemService(
+        IMediaItemManager mediaItemManager,
+        IFileService fileService)
     {
         _mediaItemManager = mediaItemManager;
+        _fileService = fileService;
     }
 
     public async Task<int> CreateMediaItemAsync(MediaItemDto mediaItemDto)
@@ -40,6 +44,13 @@ public class MediaItemService : IMediaItemService
 
     public async Task<bool> DeleteMediaItemByIdAsync(int id)
     {
+        var mediaItem = await GetMediaItemAsync(id);
+        if (mediaItem is null)
+            return false;
+
+        if (!_fileService.DeleteFile(mediaItem.FilePath))
+            return false;
+
         return await _mediaItemManager.DeleteMediaItemByIdAsync(id);
     }
 

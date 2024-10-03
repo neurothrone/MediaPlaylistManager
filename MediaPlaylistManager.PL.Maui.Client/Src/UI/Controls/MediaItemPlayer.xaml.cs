@@ -4,8 +4,8 @@ using MediaPlaylistManager.UtilitiesLib;
 
 namespace MediaPlaylistManager.PL.Maui.Client.UI.Controls;
 
-public partial class MediaItemPlayer : 
-    ContentView, 
+public partial class MediaItemPlayer :
+    ContentView,
     IDisposable
 {
     public MediaItemPlayer()
