@@ -1,13 +1,13 @@
-using MediaPlaylistManager.DAL.Entities;
+using MediaPlaylistManager.DAL.Shared.Entities;
 
-namespace MediaPlaylistManager.DAL.Interfaces;
+namespace MediaPlaylistManager.DAL.Shared.Interfaces;
 
 public interface IMediaItemRepository
 {
     Task<int> CreateMediaItemAsync(MediaItemEntity mediaItem);
     Task<List<MediaItemEntity>> GetMediaItemsByPlaylistIdAsync(int playlistId);
-    Task<MediaItemEntity?> GetMediaItemAsync(int id);
+    Task<MediaItemEntity?> GetMediaItemByIdAsync(int id);
     Task<bool> UpdateMediaItemAsync(MediaItemEntity mediaItem);
-    Task<bool> DeleteMediaItemAsync(int id);
+    Task<bool> DeleteMediaItemByIdAsync(int id);
     Task<List<MediaItemEntity>> SearchMediaItemsAsync(string query);
 }

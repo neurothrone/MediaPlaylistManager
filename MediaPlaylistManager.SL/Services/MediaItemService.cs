@@ -29,7 +29,7 @@ public class MediaItemService : IMediaItemService
 
     public async Task<MediaItemDto?> GetMediaItemAsync(int id)
     {
-        var mediaItem = await _mediaItemManager.GetMediaItemAsync(id);
+        var mediaItem = await _mediaItemManager.GetMediaItemIdAsync(id);
         return mediaItem?.ToMediaItemDto();
     }
 
@@ -38,9 +38,9 @@ public class MediaItemService : IMediaItemService
         return await _mediaItemManager.UpdateMediaItemAsync(mediaItemDto.ToMediaItem());
     }
 
-    public async Task<bool> DeleteMediaItemAsync(int id)
+    public async Task<bool> DeleteMediaItemByIdAsync(int id)
     {
-        return await _mediaItemManager.DeleteMediaItemAsync(id);
+        return await _mediaItemManager.DeleteMediaItemByIdAsync(id);
     }
 
     public async Task<List<MediaItemDto>> SearchMediaItemsAsync(string query)

@@ -1,6 +1,6 @@
-using MediaPlaylistManager.DAL.Entities;
+using MediaPlaylistManager.DAL.Shared.Entities;
 
-namespace MediaPlaylistManager.DAL.Data;
+namespace MediaPlaylistManager.DAL.InMemory.Data;
 
 public class DataStore
 {

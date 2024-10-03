@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\MediaPlaylistManager.DAL.Shared\MediaPlaylistManager.DAL.Shared.csproj"/>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
     </ItemGroup>
 
 </Project>

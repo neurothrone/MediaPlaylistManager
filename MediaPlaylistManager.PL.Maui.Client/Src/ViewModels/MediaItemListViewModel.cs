@@ -51,7 +51,7 @@ public abstract partial class MediaItemListViewModel :
     [RelayCommand]
     private async Task DeleteMediaItem(MediaItemViewModel mediaItem)
     {
-        if (!await MediaItemService.DeleteMediaItemAsync(mediaItem.Id))
+        if (!await MediaItemService.DeleteMediaItemByIdAsync(mediaItem.Id))
             return;
 
         WeakReferenceMessenger.Default.Send(new MediaItemDeletedMessage(mediaItem));

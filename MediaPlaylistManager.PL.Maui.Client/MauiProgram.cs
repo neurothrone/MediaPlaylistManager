@@ -1,9 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using MediaPlaylistManager.BLL.Interfaces;
 using MediaPlaylistManager.BLL.Managers;
-using MediaPlaylistManager.DAL.Data;
-using MediaPlaylistManager.DAL.Interfaces;
-using MediaPlaylistManager.DAL.Repositories;
+using MediaPlaylistManager.DAL.Shared.Interfaces;
+using MediaPlaylistManager.DAL.Sqlite.Data;
 using MediaPlaylistManager.PL.Maui.Client.Enums;
 using MediaPlaylistManager.PL.Maui.Client.Services;
 using MediaPlaylistManager.PL.Maui.Client.UI.Controls;
@@ -35,31 +34,59 @@ public static class MauiProgram
             .RegisterViewModels()
             .RegisterViews();
 
+        RegisterRoutes();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
-
-        RegisterRoutes();
 
         var app = builder.Build();
 
         // NOTE: Initialize ServiceHelper for use cases when constructor injection is not
         //       possible, as is the case for [MediaItemPlayer.xaml.cs].
         ServiceHelper.Initialize(app.Services);
+
+        // !: SQLite (EF Core)
+        // Apply database migrations since we can't use 'dotnet ef database update' for a .NET MAUI project.
+        // using var scope = app.Services.CreateScope();
+        // var dbContext = scope.ServiceProvider.GetRequiredService<DAL.EFCore.Sqlite.Data.DalDbContext>();
+        // dbContext.Database.Migrate();
+
         return app;
     }
 
     private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
     {
-        builder.Services.AddSingleton<DataStore>();
+        // !: DAL -> SQLite data source (sqlite-net-pcl)
+        builder.Services.AddSingleton<MediaDatabase>();
+        builder.Services.AddSingleton<IPlaylistRepository, MediaDatabase>();
+        builder.Services.AddSingleton<IMediaItemRepository, MediaDatabase>();
 
-        builder.Services.AddSingleton<IPlaylistService, PlaylistService>();
+        // !: DAL -> SQLite data source (EF Core). Doesn't work on MAUI.
+        // builder.Services.AddDbContext<DAL.EFCore.Sqlite.Data.DalDbContext>(
+        //     options => options.UseSqlite(
+        //         Path.Combine(
+        //             FileSystem.AppDataDirectory,
+        //             "MediaPlaylistManager.db3")));
+        // builder.Services.AddSingleton<
+        //     DAL.EFCore.Sqlite.Interfaces.IPlaylistRepository,
+        //     DAL.EFCore.Sqlite.Repositories.PlaylistRepository>();
+        // builder.Services.AddSingleton<
+        //     DAL.EFCore.Sqlite.Interfaces.IMediaItemRepository,
+        //     DAL.EFCore.Sqlite.Repositories.MediaItemRepository>();
+
+        // !: DAL -> In-Memory data source
+        // builder.Services.AddSingleton<DAL.InMemory.Data.DataStore>();
+        // builder.Services.AddSingleton<IPlaylistRepository, DAL.InMemory.Repositories.PlaylistRepository>();
+        // builder.Services.AddSingleton<IMediaItemRepository, DAL.InMemory.Repositories.MediaItemRepository>();
+
+        // !: BLL
         builder.Services.AddSingleton<IPlaylistManager, PlaylistManager>();
-        builder.Services.AddSingleton<IPlaylistRepository, PlaylistRepository>();
-
-        builder.Services.AddSingleton<IMediaItemService, MediaItemService>();
         builder.Services.AddSingleton<IMediaItemManager, MediaItemManager>();
-        builder.Services.AddSingleton<IMediaItemRepository, MediaItemRepository>();
+
+        // !: SL
+        builder.Services.AddSingleton<IPlaylistService, PlaylistService>();
+        builder.Services.AddSingleton<IMediaItemService, MediaItemService>();
 
         builder.Services.AddSingleton<INavigator, Navigator>();
         builder.Services.AddSingleton<IFileService, FileService>();

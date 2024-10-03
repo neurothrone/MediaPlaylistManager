@@ -16,13 +16,13 @@ public class PlaylistService : IPlaylistService
 
     public async Task<PlaylistDto> CreatePlaylistAsync(string title)
     {
-        var playlist = await _playlistManager.AddPlaylistAsync(title);
+        var playlist = await _playlistManager.CreatePlaylistAsync(title);
         return playlist.ToPlaylistDto();
     }
 
     public async Task<List<PlaylistDto>> GetPlaylistsAsync()
     {
-        var playlists = await _playlistManager.GetAllPlaylistsAsync();
+        var playlists = await _playlistManager.GetPlaylistsAsync();
         return playlists
             .Select(playlist => playlist.ToPlaylistDto())
             .ToList();
@@ -30,7 +30,7 @@ public class PlaylistService : IPlaylistService
 
     public async Task<PlaylistDto?> GetPlaylistByIdAsync(int id)
     {
-        var playlist = await _playlistManager.GetPlaylistAsync(id);
+        var playlist = await _playlistManager.GetPlaylistByIdAsync(id);
         return playlist?.ToPlaylistDto();
     }
 
@@ -41,6 +41,6 @@ public class PlaylistService : IPlaylistService
 
     public async Task<bool> DeletePlaylistByIdAsync(int id)
     {
-        return await _playlistManager.DeletePlaylistAsync(id);
+        return await _playlistManager.DeletePlaylistByIdAsync(id);
     }
 }

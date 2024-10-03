@@ -1,20 +1,20 @@
 using MediaPlaylistManager.BLL.Models;
-using MediaPlaylistManager.DAL.Entities;
+using MediaPlaylistManager.DAL.Shared.Entities;
 
 namespace MediaPlaylistManager.BLL.Utils;
 
 internal static class MediaItemExtensions
 {
-    public static MediaItem ToMediaItem(this MediaItemEntity mediaItemEntity)
+    public static MediaItem ToMediaItem(this MediaItemEntity mediaItemEntityBase)
     {
         return new MediaItem
         {
-            Id = mediaItemEntity.Id,
-            PlaylistId = mediaItemEntity.PlaylistId,
-            FilePath = mediaItemEntity.FilePath,
-            Title = mediaItemEntity.Title,
-            Artist = mediaItemEntity.Artist,
-            Duration = mediaItemEntity.Duration
+            Id = mediaItemEntityBase.Id,
+            PlaylistId = mediaItemEntityBase.PlaylistId,
+            FilePath = mediaItemEntityBase.FilePath,
+            Title = mediaItemEntityBase.Title,
+            Artist = mediaItemEntityBase.Artist,
+            Duration = mediaItemEntityBase.Duration
         };
     }
 

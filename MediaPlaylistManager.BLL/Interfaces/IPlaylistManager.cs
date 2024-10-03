@@ -4,9 +4,9 @@ namespace MediaPlaylistManager.BLL.Interfaces;
 
 public interface IPlaylistManager
 {
-    Task<Playlist> AddPlaylistAsync(string title);
-    Task<List<Playlist>> GetAllPlaylistsAsync();
-    Task<Playlist?> GetPlaylistAsync(int id);
+    Task<Playlist> CreatePlaylistAsync(string title);
+    Task<List<Playlist>> GetPlaylistsAsync();
+    Task<Playlist?> GetPlaylistByIdAsync(int id);
     Task<bool> UpdatePlaylistAsync(Playlist playlist);
-    Task<bool> DeletePlaylistAsync(int id);
+    Task<bool> DeletePlaylistByIdAsync(int id);
 }

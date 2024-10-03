@@ -80,7 +80,20 @@ public partial class MediaItemPlayerViewModel :
     {
         Stop();
 
-        MainThread.BeginInvokeOnMainThread(() => Source = MediaSource.FromFile(filePath));
+        Console.WriteLine($"Loading mediaItem... Filepath: {filePath}");
+        // MainThread.BeginInvokeOnMainThread(() => Source = MediaSource.FromFile(filePath));
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            try
+            {
+                var mediaSource = MediaSource.FromFile(filePath);
+                Source = mediaSource;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"⚠️ -> Unable to load mediaItem: {filePath}: {ex.Message}");
+            }
+        });
     }
 
     #region IRecipient<MediaItemLoadedMessage>
