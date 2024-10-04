@@ -2,9 +2,9 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:MediaPlaylistManager.PL.Maui.Client.UI.Controls"
              xmlns:viewModels="clr-namespace:MediaPlaylistManager.PL.Maui.Client.ViewModels"
-             x:Class="MediaPlaylistManager.PL.Maui.Client.UI.Pages.SearchPage"
+             xmlns:controls1="clr-namespace:MediaPlaylistManager.PL.Maui.Client.Views.Controls"
+             x:Class="MediaPlaylistManager.PL.Maui.Client.Views.Pages.SearchPage"
              x:DataType="viewModels:SearchViewModel"
              Title="Search">
 
@@ -62,7 +62,7 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewModels:MediaItemViewModel">
-                    <controls:MediaItemView />
+                    <controls1:MediaItemView />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

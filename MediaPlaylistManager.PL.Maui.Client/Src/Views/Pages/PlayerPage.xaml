@@ -2,18 +2,18 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:MediaPlaylistManager.PL.Maui.Client.UI.Controls"
-             x:Class="MediaPlaylistManager.PL.Maui.Client.UI.Pages.PlayerPage"
+             xmlns:controls1="clr-namespace:MediaPlaylistManager.PL.Maui.Client.Views.Controls"
+             x:Class="MediaPlaylistManager.PL.Maui.Client.Views.Pages.PlayerPage"
              Title="Player">
 
     <ScrollView>
         <VerticalStackLayout Spacing="20">
-            <controls:MediaItemPlayer Padding="20,0" />
+            <controls1:MediaItemPlayer Padding="20,0" />
 
             <BoxView HeightRequest="1"
                      Color="BlueViolet" />
 
-            <controls:PlayerDetails Padding="20,0" />
+            <controls1:PlayerDetails Padding="20,0" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

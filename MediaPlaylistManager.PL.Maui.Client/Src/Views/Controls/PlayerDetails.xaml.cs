@@ -1,7 +1,7 @@
 using MediaPlaylistManager.PL.Maui.Client.ViewModels;
 using MediaPlaylistManager.UtilitiesLib;
 
-namespace MediaPlaylistManager.PL.Maui.Client.UI.Controls;
+namespace MediaPlaylistManager.PL.Maui.Client.Views.Controls;
 
 public partial class PlayerDetails : ContentView
 {

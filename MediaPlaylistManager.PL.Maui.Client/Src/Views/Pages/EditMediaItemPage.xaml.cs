@@ -1,6 +1,6 @@
 using MediaPlaylistManager.PL.Maui.Client.ViewModels;
 
-namespace MediaPlaylistManager.PL.Maui.Client.UI.Pages;
+namespace MediaPlaylistManager.PL.Maui.Client.Views.Pages;
 
 public partial class EditMediaItemPage : ContentPage
 {

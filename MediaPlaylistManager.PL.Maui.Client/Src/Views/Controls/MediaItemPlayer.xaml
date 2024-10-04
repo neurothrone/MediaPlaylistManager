@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:MediaPlaylistManager.PL.Maui.Client.ViewModels"
-             x:Class="MediaPlaylistManager.PL.Maui.Client.UI.Controls.MediaItemPlayer"
+             x:Class="MediaPlaylistManager.PL.Maui.Client.Views.Controls.MediaItemPlayer"
              x:DataType="viewModels:MediaItemPlayerViewModel">
 
     <VerticalStackLayout Spacing="20">

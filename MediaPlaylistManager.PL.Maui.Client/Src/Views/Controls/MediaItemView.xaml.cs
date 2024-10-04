@@ -1,4 +1,4 @@
-namespace MediaPlaylistManager.PL.Maui.Client.UI.Controls;
+namespace MediaPlaylistManager.PL.Maui.Client.Views.Controls;
 
 public partial class MediaItemView : ContentView
 {
