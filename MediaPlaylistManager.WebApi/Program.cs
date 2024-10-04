@@ -32,6 +32,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// !: Apply migrations and create the database at runtime if it doesn't exist
+// Source:
+// https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli#apply-migrations-at-runtime
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DalDbContext>();
+    context.Database.Migrate();
+}
+
 #endregion
 
 #region Playlist Routes
