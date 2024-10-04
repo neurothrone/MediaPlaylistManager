@@ -10,14 +10,12 @@ public class PlaylistWebApiRepository : IPlaylistRepository
     private readonly HttpClient _client;
     private readonly JsonSerializerOptions _serializerOptions;
 
-    public PlaylistWebApiRepository()
+    public PlaylistWebApiRepository(
+        HttpClient client,
+        JsonSerializerOptions serializerOptions)
     {
-        _client = new HttpClient();
-        _serializerOptions = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
-        };
+        _client = client;
+        _serializerOptions = serializerOptions;
     }
 
     public async Task<PlaylistEntity> CreatePlaylistAsync(string title)

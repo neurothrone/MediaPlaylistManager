@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿using System.Text.Json;
+using CommunityToolkit.Maui;
 using MediaPlaylistManager.BLL.Interfaces;
 using MediaPlaylistManager.BLL.Managers;
 using MediaPlaylistManager.DAL.EFCore.Shared.Interfaces;
@@ -53,6 +54,15 @@ public static class MauiProgram
         // !: DAL -> SQLite data source (WebApi)
         builder.Services.AddSingleton<IPlaylistRepository, DAL.EFCore.WebApi.Repositories.PlaylistWebApiRepository>();
         builder.Services.AddSingleton<IMediaItemRepository, DAL.EFCore.WebApi.Repositories.MediaItemWebApiRepository>();
+        // Source:
+        // https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory
+        builder.Services.AddHttpClient(DAL.EFCore.WebApi.WebApiConstants.Name,
+            client => client.BaseAddress = new Uri(DAL.EFCore.WebApi.WebApiConstants.BaseUrl));
+        builder.Services.AddSingleton(new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        });
 
         // !: DAL -> SQLite data source (sqlite-net-pcl)
         // builder.Services.AddSingleton<DAL.Local.Sqlite.Data.MediaDatabase>();
