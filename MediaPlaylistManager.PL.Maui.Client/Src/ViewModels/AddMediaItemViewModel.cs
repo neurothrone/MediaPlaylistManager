@@ -11,10 +11,11 @@ public partial class AddMediaItemViewModel :
     ObservableObject,
     IQueryAttributable
 {
-    private readonly IMediaItemService _mediaItemService;
+    private readonly IDialogService _dialogService;
     private readonly IFileService _fileService;
-    private readonly IMediaMetadataService _mediaMetadataService;
     private readonly INavigator _navigator;
+    private readonly IMediaItemService _mediaItemService;
+    private readonly IMediaMetadataService _mediaMetadataService;
 
     [ObservableProperty]
     private int _playlistId;
@@ -37,15 +38,17 @@ public partial class AddMediaItemViewModel :
     private bool _isLoading;
 
     public AddMediaItemViewModel(
-        IMediaItemService mediaItemService,
+        IDialogService dialogService,
         IFileService fileService,
-        IMediaMetadataService mediaMetadataService,
-        INavigator navigator)
+        INavigator navigator,
+        IMediaItemService mediaItemService,
+        IMediaMetadataService mediaMetadataService)
     {
-        _mediaItemService = mediaItemService;
+        _dialogService = dialogService;
         _fileService = fileService;
-        _mediaMetadataService = mediaMetadataService;
         _navigator = navigator;
+        _mediaItemService = mediaItemService;
+        _mediaMetadataService = mediaMetadataService;
     }
 
     private bool CanSaveMediaItem() => !string.IsNullOrWhiteSpace(FilePath) &&
@@ -65,15 +68,41 @@ public partial class AddMediaItemViewModel :
             Artist,
             Duration);
 
-        int mediaItemId = await _mediaItemService.CreateMediaItemAsync(dto);
-        if (mediaItemId == -1)
+        string? errorMessage = null;
+
+        try
         {
-            // TODO: Show error message
-            return;
+            IsLoading = true;
+
+            int mediaItemId = await _mediaItemService.CreateMediaItemAsync(dto);
+
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                IsLoading = false;
+
+                if (mediaItemId == -1)
+                {
+                    errorMessage = "Something went wrong when creating media item";
+                }
+                else
+                {
+                    WeakReferenceMessenger.Default.Send(new MediaItemAddedMessage(PlaylistId, mediaItemId));
+                    await _navigator.GoBackAsync();
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            IsLoading = false;
+            errorMessage = $"Exception occurred: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
         }
 
-        WeakReferenceMessenger.Default.Send(new MediaItemAddedMessage(PlaylistId, mediaItemId));
-        await _navigator.GoBackAsync();
+        if (errorMessage is not null)
+            await _dialogService.ShowAlertAsync("Error", errorMessage, "OK");
     }
 
     [RelayCommand]
@@ -99,8 +128,7 @@ public partial class AddMediaItemViewModel :
         }
         catch
         {
-            // TODO: Show feedback?
-            // MainThread.BeginInvokeOnMainThread(() => ErrorMessage = "No file selected");
+            await _dialogService.ShowAlertAsync("Error", "Something went wrong when picking the file", "OK");
         }
         finally
         {

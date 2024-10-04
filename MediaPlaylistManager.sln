@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaPlaylistManager.SL", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaPlaylistManager.PL.Maui.Client", "MediaPlaylistManager.PL.Maui.Client\MediaPlaylistManager.PL.Maui.Client.csproj", "{356DC740-6249-4F86-9266-59F6CA3D5D1B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{67E8A569-9E09-4D5F-B57C-0C411FAA08B7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{67E8A569-9E09-4D5F-B57C-0C411FAA08B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{579C96A9-552B-4FBD-AFF3-319E7B62FC57}"
 EndProject
@@ -19,15 +19,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaPlaylistManager.Utilit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaPlaylistManager.PL.Maui.Shared", "MediaPlaylistManager.PL.Maui.Shared\MediaPlaylistManager.PL.Maui.Shared.csproj", "{9B679DCF-89E5-47AE-961A-635E71756D99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.DAL.InMemory", "MediaPlaylistManager.DAL.InMemory\MediaPlaylistManager.DAL.InMemory.csproj", "{60EC47E9-D0D0-4346-A329-645657258E82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.DAL.Local.InMemory", "MediaPlaylistManager.DAL.Local.InMemory\MediaPlaylistManager.DAL.Local.InMemory.csproj", "{60EC47E9-D0D0-4346-A329-645657258E82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.DAL.Sqlite", "MediaPlaylistManager.DAL.Sqlite\MediaPlaylistManager.DAL.Sqlite.csproj", "{FDDD164C-24A1-43FB-A8FA-04D388E05C7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.DAL.Local.Sqlite", "MediaPlaylistManager.DAL.Local.Sqlite\MediaPlaylistManager.DAL.Local.Sqlite.csproj", "{FDDD164C-24A1-43FB-A8FA-04D388E05C7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.DAL.EFCore.Sqlite.Migrations", "MediaPlaylistManager.DAL.EFCore.Sqlite.Migrations\MediaPlaylistManager.DAL.EFCore.Sqlite.Migrations.csproj", "{4AA394B4-52FD-4AAC-A2C1-85A7B66D7E46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.DAL.Local.Shared", "MediaPlaylistManager.DAL.Local.Shared\MediaPlaylistManager.DAL.Local.Shared.csproj", "{A421301F-6562-433A-8678-516234C66E0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.DAL.EFCore.Sqlite", "MediaPlaylistManager.DAL.EFCore.Sqlite\MediaPlaylistManager.DAL.EFCore.Sqlite.csproj", "{5A984977-C800-4729-AD61-F451325C4741}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.WebApi", "MediaPlaylistManager.WebApi\MediaPlaylistManager.WebApi.csproj", "{5FCAC461-4FF1-4C0D-8BA9-2F9630C351D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.DAL.Shared", "MediaPlaylistManager.DAL.Shared\MediaPlaylistManager.DAL.Shared.csproj", "{A421301F-6562-433A-8678-516234C66E0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.DAL.EFCore.WebApi", "MediaPlaylistManager.DAL.EFCore.WebApi\MediaPlaylistManager.DAL.EFCore.WebApi.csproj", "{A3DF5B35-5B3F-40FD-AD66-E7D13F5A5229}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlaylistManager.DAL.EFCore.Shared", "MediaPlaylistManager.DAL.EFCore.Shared\MediaPlaylistManager.DAL.EFCore.Shared.csproj", "{086000C5-BFB8-4B86-B891-E84741F412C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,18 +70,22 @@ Global
 		{FDDD164C-24A1-43FB-A8FA-04D388E05C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDDD164C-24A1-43FB-A8FA-04D388E05C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDDD164C-24A1-43FB-A8FA-04D388E05C7D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4AA394B4-52FD-4AAC-A2C1-85A7B66D7E46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4AA394B4-52FD-4AAC-A2C1-85A7B66D7E46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4AA394B4-52FD-4AAC-A2C1-85A7B66D7E46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4AA394B4-52FD-4AAC-A2C1-85A7B66D7E46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A984977-C800-4729-AD61-F451325C4741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A984977-C800-4729-AD61-F451325C4741}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A984977-C800-4729-AD61-F451325C4741}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A984977-C800-4729-AD61-F451325C4741}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A421301F-6562-433A-8678-516234C66E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A421301F-6562-433A-8678-516234C66E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A421301F-6562-433A-8678-516234C66E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A421301F-6562-433A-8678-516234C66E0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FCAC461-4FF1-4C0D-8BA9-2F9630C351D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FCAC461-4FF1-4C0D-8BA9-2F9630C351D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FCAC461-4FF1-4C0D-8BA9-2F9630C351D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FCAC461-4FF1-4C0D-8BA9-2F9630C351D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3DF5B35-5B3F-40FD-AD66-E7D13F5A5229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3DF5B35-5B3F-40FD-AD66-E7D13F5A5229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3DF5B35-5B3F-40FD-AD66-E7D13F5A5229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3DF5B35-5B3F-40FD-AD66-E7D13F5A5229}.Release|Any CPU.Build.0 = Release|Any CPU
+		{086000C5-BFB8-4B86-B891-E84741F412C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{086000C5-BFB8-4B86-B891-E84741F412C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{086000C5-BFB8-4B86-B891-E84741F412C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{086000C5-BFB8-4B86-B891-E84741F412C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,8 +99,9 @@ Global
 		{9B679DCF-89E5-47AE-961A-635E71756D99} = {579C96A9-552B-4FBD-AFF3-319E7B62FC57}
 		{60EC47E9-D0D0-4346-A329-645657258E82} = {579C96A9-552B-4FBD-AFF3-319E7B62FC57}
 		{FDDD164C-24A1-43FB-A8FA-04D388E05C7D} = {579C96A9-552B-4FBD-AFF3-319E7B62FC57}
-		{4AA394B4-52FD-4AAC-A2C1-85A7B66D7E46} = {579C96A9-552B-4FBD-AFF3-319E7B62FC57}
-		{5A984977-C800-4729-AD61-F451325C4741} = {579C96A9-552B-4FBD-AFF3-319E7B62FC57}
 		{A421301F-6562-433A-8678-516234C66E0A} = {579C96A9-552B-4FBD-AFF3-319E7B62FC57}
+		{5FCAC461-4FF1-4C0D-8BA9-2F9630C351D7} = {67E8A569-9E09-4D5F-B57C-0C411FAA08B7}
+		{A3DF5B35-5B3F-40FD-AD66-E7D13F5A5229} = {579C96A9-552B-4FBD-AFF3-319E7B62FC57}
+		{086000C5-BFB8-4B86-B891-E84741F412C6} = {579C96A9-552B-4FBD-AFF3-319E7B62FC57}
 	EndGlobalSection
 EndGlobal

@@ -7,7 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\MediaPlaylistManager.DAL.Shared\MediaPlaylistManager.DAL.Shared.csproj"/>
+        <!-- !: When using Local SQLite or InMemory -->
+        <!--        <ProjectReference Include="..\MediaPlaylistManager.DAL.Local.Shared\MediaPlaylistManager.DAL.Local.Shared.csproj"/>-->
+        <!-- !: When using Web API  -->
+        <ProjectReference Include="..\MediaPlaylistManager.DAL.EFCore.Shared\MediaPlaylistManager.DAL.EFCore.Shared.csproj"/>
     </ItemGroup>
 
 </Project>

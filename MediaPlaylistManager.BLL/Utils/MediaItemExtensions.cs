@@ -1,5 +1,5 @@
 using MediaPlaylistManager.BLL.Models;
-using MediaPlaylistManager.DAL.Shared.Entities;
+using MediaPlaylistManager.DAL.EFCore.Shared.Entities;
 
 namespace MediaPlaylistManager.BLL.Utils;
 

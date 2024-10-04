@@ -66,10 +66,17 @@ public class FileService : IFileService
 
     public bool DeleteFile(string sourceFilePath)
     {
-        if (!File.Exists(sourceFilePath))
-            return false;
+        try
+        {
+            if (File.Exists(sourceFilePath))
+                File.Delete(sourceFilePath);
 
-        File.Delete(sourceFilePath);
-        return true;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting file: {ex}");
+            return false;
+        }
     }
 }

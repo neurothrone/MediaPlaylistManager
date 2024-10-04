@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using MediaPlaylistManager.BLL.Interfaces;
 using MediaPlaylistManager.BLL.Managers;
-using MediaPlaylistManager.DAL.Shared.Interfaces;
-using MediaPlaylistManager.DAL.Sqlite.Data;
+using MediaPlaylistManager.DAL.EFCore.Shared.Interfaces;
 using MediaPlaylistManager.PL.Maui.Client.Enums;
 using MediaPlaylistManager.PL.Maui.Client.Services;
 using MediaPlaylistManager.PL.Maui.Client.UI.Controls;
@@ -46,39 +45,24 @@ public static class MauiProgram
         //       possible, as is the case for [MediaItemPlayer.xaml.cs].
         ServiceHelper.Initialize(app.Services);
 
-        // !: SQLite (EF Core)
-        // Apply database migrations since we can't use 'dotnet ef database update' for a .NET MAUI project.
-        // using var scope = app.Services.CreateScope();
-        // var dbContext = scope.ServiceProvider.GetRequiredService<DAL.EFCore.Sqlite.Data.DalDbContext>();
-        // dbContext.Database.Migrate();
-
         return app;
     }
 
     private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
     {
-        // !: DAL -> SQLite data source (sqlite-net-pcl)
-        builder.Services.AddSingleton<MediaDatabase>();
-        builder.Services.AddSingleton<IPlaylistRepository, MediaDatabase>();
-        builder.Services.AddSingleton<IMediaItemRepository, MediaDatabase>();
+        // !: DAL -> SQLite data source (WebApi)
+        builder.Services.AddSingleton<IPlaylistRepository, DAL.EFCore.WebApi.Repositories.PlaylistWebApiRepository>();
+        builder.Services.AddSingleton<IMediaItemRepository, DAL.EFCore.WebApi.Repositories.MediaItemWebApiRepository>();
 
-        // !: DAL -> SQLite data source (EF Core). Doesn't work on MAUI.
-        // builder.Services.AddDbContext<DAL.EFCore.Sqlite.Data.DalDbContext>(
-        //     options => options.UseSqlite(
-        //         Path.Combine(
-        //             FileSystem.AppDataDirectory,
-        //             "MediaPlaylistManager.db3")));
-        // builder.Services.AddSingleton<
-        //     DAL.EFCore.Sqlite.Interfaces.IPlaylistRepository,
-        //     DAL.EFCore.Sqlite.Repositories.PlaylistRepository>();
-        // builder.Services.AddSingleton<
-        //     DAL.EFCore.Sqlite.Interfaces.IMediaItemRepository,
-        //     DAL.EFCore.Sqlite.Repositories.MediaItemRepository>();
+        // !: DAL -> SQLite data source (sqlite-net-pcl)
+        // builder.Services.AddSingleton<DAL.Local.Sqlite.Data.MediaDatabase>();
+        // builder.Services.AddSingleton<IPlaylistRepository, DAL.Local.Sqlite.Data.MediaDatabase>();
+        // builder.Services.AddSingleton<IMediaItemRepository, DAL.Local.Sqlite.Data.MediaDatabase>();
 
         // !: DAL -> In-Memory data source
-        // builder.Services.AddSingleton<DAL.InMemory.Data.DataStore>();
-        // builder.Services.AddSingleton<IPlaylistRepository, DAL.InMemory.Repositories.PlaylistRepository>();
-        // builder.Services.AddSingleton<IMediaItemRepository, DAL.InMemory.Repositories.MediaItemRepository>();
+        // builder.Services.AddSingleton<DAL.Local.InMemory.Data.DataStore>();
+        // builder.Services.AddSingleton<IPlaylistRepository, DAL.Local.InMemory.Repositories.PlaylistRepository>();
+        // builder.Services.AddSingleton<IMediaItemRepository, DAL.Local.InMemory.Repositories.MediaItemRepository>();
 
         // !: BLL
         builder.Services.AddSingleton<IPlaylistManager, PlaylistManager>();
@@ -87,10 +71,11 @@ public static class MauiProgram
         // !: SL
         builder.Services.AddSingleton<IPlaylistService, PlaylistService>();
         builder.Services.AddSingleton<IMediaItemService, MediaItemService>();
-
-        builder.Services.AddSingleton<INavigator, Navigator>();
-        builder.Services.AddSingleton<IFileService, FileService>();
         builder.Services.AddSingleton<IMediaMetadataService, MediaMetadataService>();
+
+        builder.Services.AddSingleton<IDialogService, DialogService>();
+        builder.Services.AddSingleton<IFileService, FileService>();
+        builder.Services.AddSingleton<INavigator, Navigator>();
 
         return builder;
     }

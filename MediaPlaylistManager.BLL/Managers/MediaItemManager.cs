@@ -1,7 +1,7 @@
 using MediaPlaylistManager.BLL.Interfaces;
 using MediaPlaylistManager.BLL.Models;
 using MediaPlaylistManager.BLL.Utils;
-using MediaPlaylistManager.DAL.Shared.Interfaces;
+using MediaPlaylistManager.DAL.EFCore.Shared.Interfaces;
 
 namespace MediaPlaylistManager.BLL.Managers;
 
