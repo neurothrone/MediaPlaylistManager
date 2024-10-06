@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaPlaylistManager.WebApi.Data;
 
-public class DalDbContext : DbContext
+public class ApiDbContext : DbContext
 {
-    public DalDbContext(DbContextOptions<DalDbContext> options) : base(options)
+    public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
     {
     }
 

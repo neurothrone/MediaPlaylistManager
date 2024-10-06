@@ -8,6 +8,6 @@ public class MediaItemEntity
     public string Title { get; set; } = string.Empty;
     public string Artist { get; set; } = string.Empty;
     public TimeSpan Duration { get; set; }
-    
-    public PlaylistEntity Playlist { get; set; }
+
+    public PlaylistEntity Playlist { get; set; } = null!;
 }

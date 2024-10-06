@@ -7,9 +7,9 @@ namespace MediaPlaylistManager.WebApi.Repositories;
 
 public class PlaylistRepository : IPlaylistRepository
 {
-    private readonly DalDbContext _dbContext;
+    private readonly ApiDbContext _dbContext;
 
-    public PlaylistRepository(DalDbContext dbContext)
+    public PlaylistRepository(ApiDbContext dbContext)
     {
         _dbContext = dbContext;
     }

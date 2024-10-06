@@ -11,9 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DalDbContext>(options => options.UseSqlite(
-    builder.Configuration.GetConnectionString(nameof(DalDbContext)) ??
-    throw new InvalidOperationException($"Connection string '{nameof(DalDbContext)}' not found.")));
+builder.Services.AddDbContext<ApiDbContext>(options => options.UseSqlite(
+    builder.Configuration.GetConnectionString(nameof(ApiDbContext)) ??
+    throw new InvalidOperationException($"Connection string '{nameof(ApiDbContext)}' not found.")));
 
 builder.Services.AddScoped<IPlaylistRepository, PlaylistRepository>();
 builder.Services.AddScoped<IMediaItemRepository, MediaItemRepository>();
@@ -35,7 +35,7 @@ app.UseHttpsRedirection();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<DalDbContext>();
+    var context = services.GetRequiredService<ApiDbContext>();
     context.Database.Migrate();
 }
 
