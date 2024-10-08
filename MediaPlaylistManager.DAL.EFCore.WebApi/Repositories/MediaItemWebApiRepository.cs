@@ -39,7 +39,7 @@ public class MediaItemWebApiRepository : IMediaItemRepository
         return createdMediaItem.Id;
     }
 
-    public async Task<List<MediaItemEntity>> GetMediaItemsByPlaylistIdAsync(int playlistId)
+    public async Task<IReadOnlyCollection<MediaItemEntity>> GetMediaItemsByPlaylistIdAsync(int playlistId)
     {
         var uri = new Uri($"{WebApiConstants.BaseUrl}/media-items/playlist/{playlistId}");
         var response = await _client.GetAsync(uri);
@@ -47,7 +47,8 @@ public class MediaItemWebApiRepository : IMediaItemRepository
             return [];
 
         var content = await response.Content.ReadAsStringAsync();
-        var mediaItems = JsonSerializer.Deserialize<List<MediaItemEntity>>(content, _serializerOptions) ?? [];
+        var mediaItems = JsonSerializer.Deserialize<IReadOnlyCollection<MediaItemEntity>>(
+            content, _serializerOptions) ?? [];
         return mediaItems;
     }
 
@@ -80,7 +81,7 @@ public class MediaItemWebApiRepository : IMediaItemRepository
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<List<MediaItemEntity>> SearchMediaItemsAsync(string query)
+    public async Task<IReadOnlyCollection<MediaItemEntity>> SearchMediaItemsAsync(string query)
     {
         var uri = new Uri($"{WebApiConstants.BaseUrl}/media-items?query={query}");
 
@@ -89,7 +90,8 @@ public class MediaItemWebApiRepository : IMediaItemRepository
             return [];
 
         var content = await response.Content.ReadAsStringAsync();
-        var mediaItems = JsonSerializer.Deserialize<List<MediaItemEntity>>(content, _serializerOptions) ?? [];
+        var mediaItems = JsonSerializer.Deserialize<IReadOnlyCollection<MediaItemEntity>>(
+            content, _serializerOptions) ?? [];
         return mediaItems;
     }
 }

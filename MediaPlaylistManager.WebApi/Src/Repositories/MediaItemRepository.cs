@@ -22,12 +22,12 @@ public class MediaItemRepository : IMediaItemRepository
         return entry.Entity.Id;
     }
 
-    public async Task<List<MediaItemEntity>> GetMediaItemsByPlaylistIdAsync(int playlistId)
+    public async Task<IReadOnlyCollection<MediaItemEntity>> GetMediaItemsByPlaylistIdAsync(int playlistId)
     {
         return await _dbContext.MediaItems
             .AsNoTracking()
             .Where(m => m.PlaylistId == playlistId)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     public async Task<MediaItemEntity?> GetMediaItemByIdAsync(int id)
@@ -64,7 +64,7 @@ public class MediaItemRepository : IMediaItemRepository
         return true;
     }
 
-    public async Task<List<MediaItemEntity>> SearchMediaItemsAsync(string query)
+    public async Task<IReadOnlyCollection<MediaItemEntity>> SearchMediaItemsAsync(string query)
     {
         return await _dbContext.MediaItems
             .AsNoTracking()
@@ -72,7 +72,7 @@ public class MediaItemRepository : IMediaItemRepository
                 m.Title.Contains(query) ||
                 m.Artist.Contains(query)
             )
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     private async Task<MediaItemEntity?> GetTrackedMediaItemByIdAsync(int id)

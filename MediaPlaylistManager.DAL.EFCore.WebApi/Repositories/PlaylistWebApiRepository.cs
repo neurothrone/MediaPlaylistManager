@@ -35,7 +35,7 @@ public class PlaylistWebApiRepository : IPlaylistRepository
         return createdPlaylist;
     }
 
-    public async Task<List<PlaylistEntity>> GetPlaylistsAsync()
+    public async Task<IReadOnlyCollection<PlaylistEntity>> GetPlaylistsAsync()
     {
         var uri = new Uri($"{WebApiConstants.BaseUrl}/playlists");
         var response = await _client.GetAsync(uri);
@@ -43,7 +43,8 @@ public class PlaylistWebApiRepository : IPlaylistRepository
             return [];
 
         var content = await response.Content.ReadAsStringAsync();
-        var playlists = JsonSerializer.Deserialize<List<PlaylistEntity>>(content, _serializerOptions) ?? [];
+        var playlists = JsonSerializer.Deserialize<IReadOnlyCollection<PlaylistEntity>>(
+            content, _serializerOptions) ?? [];
         return playlists;
     }
 

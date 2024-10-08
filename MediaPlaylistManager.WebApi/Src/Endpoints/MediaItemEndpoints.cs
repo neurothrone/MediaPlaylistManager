@@ -64,7 +64,7 @@ public static class MediaItemEndpoints
 
         mediaItemsGroup.MapGet("", async ([FromQuery] string? query, IMediaItemRepository repository) =>
             {
-                List<MediaItemEntity> mediaItems = [];
+                IReadOnlyCollection<MediaItemEntity> mediaItems = [];
                 if (string.IsNullOrEmpty(query))
                     return Results.Ok(mediaItems);
 

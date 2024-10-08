@@ -23,17 +23,25 @@ public class PlaylistRepository : IPlaylistRepository
         return entry.Entity;
     }
 
-    public async Task<List<PlaylistEntity>> GetPlaylistsAsync()
+    public async Task<IReadOnlyCollection<PlaylistEntity>> GetPlaylistsAsync()
     {
         return await _dbContext.Playlists
             .AsNoTracking()
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     public async Task<PlaylistEntity?> GetPlaylistByIdAsync(int id)
     {
         return await _dbContext.Playlists
             .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.Id == id);
+    }
+    
+    public async Task<PlaylistEntity?> GetPlaylistWithMediaItemsByIdAsync(int id)
+    {
+        return await _dbContext.Playlists
+            .AsNoTracking()
+            .Include(m => m.MediaItems)
             .FirstOrDefaultAsync(p => p.Id == id);
     }
 
