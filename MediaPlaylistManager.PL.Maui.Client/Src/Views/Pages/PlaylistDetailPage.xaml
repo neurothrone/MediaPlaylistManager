@@ -5,7 +5,6 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:MediaPlaylistManager.PL.Maui.Client.ViewModels"
              xmlns:controls="clr-namespace:MediaPlaylistManager.PL.Maui.Client.Views.Controls"
-             xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
              x:Class="MediaPlaylistManager.PL.Maui.Client.Views.Pages.PlaylistDetailPage"
              x:DataType="viewModels:PlaylistDetailViewModel"
              Title="{Binding Playlist.Title, FallbackValue='Playlist'}">
@@ -29,80 +28,29 @@
             IsVisible="{Binding IsLoading}"
             IsRunning="{Binding IsLoading}" />
 
-        <!-- Source: https://github.com/akgulebubekir/Maui.DataGrid -->
+        <CollectionView
+            BackgroundColor="Transparent"
+            IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+            ItemsSource="{Binding MediaItems}">
 
-        <dg:DataGrid
-            RowHeight="50"
-            HeaderHeight="50"
-            SelectionMode="None"
-            ItemsSource="{Binding MediaItems}"
-            IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
 
-            <dg:DataGrid.NoDataView>
-                <Label Margin="0,20,0,0"
-                       HorizontalTextAlignment="Center"
-                       FontSize="20"
-                       Text="No media items yet." />
-            </dg:DataGrid.NoDataView>
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <Label Text="No media items yet."
+                           FontSize="20"
+                           HorizontalTextAlignment="Center" />
+                </ContentView>
+            </CollectionView.EmptyView>
 
-            <dg:DataGrid.Columns>
-                <dg:DataGridColumn Title="Title"
-                                   PropertyName="Title"
-                                   Width="0.4*"
-                                   SortingEnabled="True" />
-                <dg:DataGridColumn Title="Artist"
-                                   PropertyName="Artist"
-                                   Width="0.2*"
-                                   SortingEnabled="True" />
-                <dg:DataGridColumn Title="Duration"
-                                   PropertyName="Duration"
-                                   Width="0.2*"
-                                   SortingEnabled="True" />
-                <dg:DataGridColumn Title="Actions"
-                                   Width="0.2*"
-                                   SortingEnabled="False">
-                    <dg:DataGridColumn.CellTemplate>
-                        <DataTemplate>
-                            <HorizontalStackLayout>
-                                <Button Text="Edit" />
-                                <Button Text="Delete" />
-                            </HorizontalStackLayout>
-                        </DataTemplate>
-                    </dg:DataGridColumn.CellTemplate>
-                </dg:DataGridColumn>
-            </dg:DataGrid.Columns>
-            
-            <dg:DataGrid.RowsBackgroundColorPalette>
-                <dg:PaletteCollection>
-                    <Color>#F2F2F2</Color>
-                    <Color>#FFFFFF</Color>
-                </dg:PaletteCollection>
-            </dg:DataGrid.RowsBackgroundColorPalette>
-        </dg:DataGrid>
-        
-        <!-- <CollectionView -->
-        <!--     BackgroundColor="Transparent" -->
-        <!--     IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}" -->
-        <!--     ItemsSource="{Binding MediaItems}"> -->
-        <!-- -->
-        <!--     <CollectionView.ItemsLayout> -->
-        <!--         <LinearItemsLayout Orientation="Vertical" -->
-        <!--                            ItemSpacing="10" /> -->
-        <!--     </CollectionView.ItemsLayout> -->
-        <!-- -->
-        <!--     <CollectionView.EmptyView> -->
-        <!--         <ContentView> -->
-        <!--             <Label Text="No media items yet." -->
-        <!--                    FontSize="20" -->
-        <!--                    HorizontalTextAlignment="Center" /> -->
-        <!--         </ContentView> -->
-        <!--     </CollectionView.EmptyView> -->
-        <!-- -->
-        <!--     <CollectionView.ItemTemplate> -->
-        <!--         <DataTemplate x:DataType="viewModels:MediaItemViewModel"> -->
-        <!--             <controls:MediaItemView /> -->
-        <!--         </DataTemplate> -->
-        <!--     </CollectionView.ItemTemplate> -->
-        <!-- </CollectionView> -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:MediaItemViewModel">
+                    <controls:MediaItemView />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </Grid>
 </ContentPage>
