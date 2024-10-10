@@ -5,27 +5,27 @@ using MediaPlaylistManager.DAL.EFCore.Shared.Interfaces;
 
 namespace MediaPlaylistManager.DAL.EFCore.WebApi.Repositories;
 
-public class PlaylistWebApiRepository : IPlaylistRepository
+public class PlaylistWebApiRepository : BaseRepository, IPlaylistRepository
 {
-    private readonly HttpClient _client;
     private readonly JsonSerializerOptions _serializerOptions;
 
     public PlaylistWebApiRepository(
-        HttpClient client,
-        JsonSerializerOptions serializerOptions)
+        IHttpClientFactory httpClientFactory,
+        JsonSerializerOptions serializerOptions) : base(httpClientFactory)
     {
-        _client = client;
         _serializerOptions = serializerOptions;
     }
 
     public async Task<PlaylistEntity> CreatePlaylistAsync(string title)
     {
+        HttpClient client = CreateHttpClient();
+        
         var playlist = new PlaylistEntity { Title = title };
         string json = JsonSerializer.Serialize(playlist, _serializerOptions);
         StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
         var uri = new Uri($"{WebApiConstants.BaseUrl}/playlists");
-        var response = await _client.PostAsync(uri, stringContent);
+        var response = await client.PostAsync(uri, stringContent);
         if (!response.IsSuccessStatusCode)
             throw new HttpRequestException($"Error creating playlist: {response.StatusCode}");
 
@@ -37,8 +37,10 @@ public class PlaylistWebApiRepository : IPlaylistRepository
 
     public async Task<IReadOnlyCollection<PlaylistEntity>> GetPlaylistsAsync()
     {
+        HttpClient client = CreateHttpClient();
+        
         var uri = new Uri($"{WebApiConstants.BaseUrl}/playlists");
-        var response = await _client.GetAsync(uri);
+        var response = await client.GetAsync(uri);
         if (!response.IsSuccessStatusCode)
             return [];
 
@@ -50,8 +52,10 @@ public class PlaylistWebApiRepository : IPlaylistRepository
 
     public async Task<PlaylistEntity?> GetPlaylistByIdAsync(int id)
     {
+        HttpClient client = CreateHttpClient();
+        
         var uri = new Uri($"{WebApiConstants.BaseUrl}/playlists/{id}");
-        var response = await _client.GetAsync(uri);
+        var response = await client.GetAsync(uri);
         if (!response.IsSuccessStatusCode)
             return null;
 
@@ -62,18 +66,22 @@ public class PlaylistWebApiRepository : IPlaylistRepository
 
     public async Task<bool> UpdatePlaylistAsync(PlaylistEntity playlist)
     {
+        HttpClient client = CreateHttpClient();
+        
         string json = JsonSerializer.Serialize(playlist, _serializerOptions);
         StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
         var uri = new Uri($"{WebApiConstants.BaseUrl}/playlists");
-        var response = await _client.PutAsync(uri, stringContent);
+        var response = await client.PutAsync(uri, stringContent);
         return response.IsSuccessStatusCode;
     }
 
     public async Task<bool> DeletePlaylistByIdAsync(int id)
     {
+        HttpClient client = CreateHttpClient();
+        
         var uri = new Uri($"{WebApiConstants.BaseUrl}/playlists/{id}");
-        var response = await _client.DeleteAsync(uri);
+        var response = await client.DeleteAsync(uri);
         return response.IsSuccessStatusCode;
     }
 }

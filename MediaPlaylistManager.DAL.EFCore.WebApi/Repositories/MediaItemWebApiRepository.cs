@@ -10,26 +10,26 @@ internal class CreatedMediaItemResponse
     public int Id { get; set; }
 }
 
-public class MediaItemWebApiRepository : IMediaItemRepository
+public class MediaItemWebApiRepository : BaseRepository, IMediaItemRepository
 {
-    private readonly HttpClient _client;
     private readonly JsonSerializerOptions _serializerOptions;
 
     public MediaItemWebApiRepository(
-        HttpClient client,
-        JsonSerializerOptions serializerOptions)
+        IHttpClientFactory httpClientFactory,
+        JsonSerializerOptions serializerOptions) : base(httpClientFactory)
     {
-        _client = client;
         _serializerOptions = serializerOptions;
     }
 
     public async Task<int> CreateMediaItemAsync(MediaItemEntity mediaItem)
     {
+        HttpClient client = CreateHttpClient();
+
         string json = JsonSerializer.Serialize(mediaItem, _serializerOptions);
         StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
         var uri = new Uri($"{WebApiConstants.BaseUrl}/media-items");
-        var response = await _client.PostAsync(uri, stringContent);
+        var response = await client.PostAsync(uri, stringContent);
         if (!response.IsSuccessStatusCode)
             throw new HttpRequestException($"Error creating media item: {response.StatusCode}");
 
@@ -41,8 +41,10 @@ public class MediaItemWebApiRepository : IMediaItemRepository
 
     public async Task<IReadOnlyCollection<MediaItemEntity>> GetMediaItemsByPlaylistIdAsync(int playlistId)
     {
+        HttpClient client = CreateHttpClient();
+
         var uri = new Uri($"{WebApiConstants.BaseUrl}/media-items/playlist/{playlistId}");
-        var response = await _client.GetAsync(uri);
+        var response = await client.GetAsync(uri);
         if (!response.IsSuccessStatusCode)
             return [];
 
@@ -54,8 +56,10 @@ public class MediaItemWebApiRepository : IMediaItemRepository
 
     public async Task<MediaItemEntity?> GetMediaItemByIdAsync(int id)
     {
+        HttpClient client = CreateHttpClient();
+
         var uri = new Uri($"{WebApiConstants.BaseUrl}/media-items/{id}");
-        var response = await _client.GetAsync(uri);
+        var response = await client.GetAsync(uri);
         if (!response.IsSuccessStatusCode)
             return null;
 
@@ -66,26 +70,32 @@ public class MediaItemWebApiRepository : IMediaItemRepository
 
     public async Task<bool> UpdateMediaItemAsync(MediaItemEntity mediaItem)
     {
+        HttpClient client = CreateHttpClient();
+
         string json = JsonSerializer.Serialize(mediaItem, _serializerOptions);
         StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
         var uri = new Uri($"{WebApiConstants.BaseUrl}/media-items");
-        var response = await _client.PutAsync(uri, stringContent);
+        var response = await client.PutAsync(uri, stringContent);
         return response.IsSuccessStatusCode;
     }
 
     public async Task<bool> DeleteMediaItemByIdAsync(int id)
     {
+        HttpClient client = CreateHttpClient();
+
         var uri = new Uri($"{WebApiConstants.BaseUrl}/media-items/{id}");
-        var response = await _client.DeleteAsync(uri);
+        var response = await client.DeleteAsync(uri);
         return response.IsSuccessStatusCode;
     }
 
     public async Task<IReadOnlyCollection<MediaItemEntity>> SearchMediaItemsAsync(string query)
     {
+        HttpClient client = CreateHttpClient();
+
         var uri = new Uri($"{WebApiConstants.BaseUrl}/media-items?query={query}");
 
-        var response = await _client.GetAsync(uri);
+        var response = await client.GetAsync(uri);
         if (!response.IsSuccessStatusCode)
             return [];
 

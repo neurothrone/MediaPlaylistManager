@@ -57,7 +57,11 @@ public static class MauiProgram
         // Source:
         // https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory
         builder.Services.AddHttpClient(DAL.EFCore.WebApi.WebApiConstants.Name,
-            client => client.BaseAddress = new Uri(DAL.EFCore.WebApi.WebApiConstants.BaseUrl));
+            client =>
+            {
+                client.BaseAddress = new Uri(DAL.EFCore.WebApi.WebApiConstants.BaseUrl);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
         builder.Services.AddSingleton(new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
