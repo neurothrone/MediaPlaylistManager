@@ -12,20 +12,15 @@ internal class CreatedMediaItemResponse
 
 public class MediaItemWebApiRepository : BaseRepository, IMediaItemRepository
 {
-    private readonly JsonSerializerOptions _serializerOptions;
-
-    public MediaItemWebApiRepository(
-        IHttpClientFactory httpClientFactory,
-        JsonSerializerOptions serializerOptions) : base(httpClientFactory)
+    public MediaItemWebApiRepository(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
     {
-        _serializerOptions = serializerOptions;
     }
 
     public async Task<int> CreateMediaItemAsync(MediaItemEntity mediaItem)
     {
         HttpClient client = CreateHttpClient();
 
-        string json = JsonSerializer.Serialize(mediaItem, _serializerOptions);
+        string json = JsonSerializer.Serialize(mediaItem, SerializerOptions);
         StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
         var uri = new Uri($"{WebApiConstants.BaseUrl}/media-items");
@@ -34,7 +29,7 @@ public class MediaItemWebApiRepository : BaseRepository, IMediaItemRepository
             throw new HttpRequestException($"Error creating media item: {response.StatusCode}");
 
         var content = await response.Content.ReadAsStringAsync();
-        var createdMediaItem = JsonSerializer.Deserialize<CreatedMediaItemResponse>(content, _serializerOptions) ??
+        var createdMediaItem = JsonSerializer.Deserialize<CreatedMediaItemResponse>(content, SerializerOptions) ??
                                throw new NullReferenceException("Could not deserialize media item");
         return createdMediaItem.Id;
     }
@@ -50,7 +45,7 @@ public class MediaItemWebApiRepository : BaseRepository, IMediaItemRepository
 
         var content = await response.Content.ReadAsStringAsync();
         var mediaItems = JsonSerializer.Deserialize<IReadOnlyCollection<MediaItemEntity>>(
-            content, _serializerOptions) ?? [];
+            content, SerializerOptions) ?? [];
         return mediaItems;
     }
 
@@ -64,7 +59,7 @@ public class MediaItemWebApiRepository : BaseRepository, IMediaItemRepository
             return null;
 
         var content = await response.Content.ReadAsStringAsync();
-        var mediaItem = JsonSerializer.Deserialize<MediaItemEntity>(content, _serializerOptions);
+        var mediaItem = JsonSerializer.Deserialize<MediaItemEntity>(content, SerializerOptions);
         return mediaItem;
     }
 
@@ -72,7 +67,7 @@ public class MediaItemWebApiRepository : BaseRepository, IMediaItemRepository
     {
         HttpClient client = CreateHttpClient();
 
-        string json = JsonSerializer.Serialize(mediaItem, _serializerOptions);
+        string json = JsonSerializer.Serialize(mediaItem, SerializerOptions);
         StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
         var uri = new Uri($"{WebApiConstants.BaseUrl}/media-items");
@@ -101,7 +96,7 @@ public class MediaItemWebApiRepository : BaseRepository, IMediaItemRepository
 
         var content = await response.Content.ReadAsStringAsync();
         var mediaItems = JsonSerializer.Deserialize<IReadOnlyCollection<MediaItemEntity>>(
-            content, _serializerOptions) ?? [];
+            content, SerializerOptions) ?? [];
         return mediaItems;
     }
 }

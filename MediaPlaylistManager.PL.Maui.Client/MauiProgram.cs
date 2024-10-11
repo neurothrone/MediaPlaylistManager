@@ -62,11 +62,6 @@ public static class MauiProgram
                 client.BaseAddress = new Uri(DAL.EFCore.WebApi.WebApiConstants.BaseUrl);
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
             });
-        builder.Services.AddSingleton(new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
-        });
 
         // !: DAL -> SQLite data source (sqlite-net-pcl)
         // builder.Services.AddSingleton<DAL.Local.Sqlite.Data.MediaDatabase>();
